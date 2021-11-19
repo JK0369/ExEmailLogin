@@ -29,6 +29,7 @@ class LoginVC: UIViewController {
         let button = UIButton()
         button.setTitle("이메일로 인증 링크 전송", for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
+        button.setTitleColor(.blue, for: .highlighted)
         button.addTarget(self, action: #selector(didTapAuthButton), for: .touchUpInside)
         return button
     }()
@@ -37,6 +38,7 @@ class LoginVC: UIViewController {
         let button = UIButton()
         button.setTitle("로그인", for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
+        button.setTitleColor(.blue, for: .highlighted)
         button.addTarget(self, action: #selector(didTapLoginButton), for: .touchUpInside)
         return button
     }()
@@ -52,21 +54,26 @@ class LoginVC: UIViewController {
         view.addSubview(emailTextField)
         view.addSubview(emailLabel)
         view.addSubview(authButton)
+        view.addSubview(loginButton)
     }
     
     private func makeConstraints() {
         emailTextField.translatesAutoresizingMaskIntoConstraints = false
         emailLabel.translatesAutoresizingMaskIntoConstraints = false
         authButton.translatesAutoresizingMaskIntoConstraints = false
+        loginButton.translatesAutoresizingMaskIntoConstraints = false
         
         emailTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         emailTextField.topAnchor.constraint(equalTo: view.topAnchor, constant: 120).isActive = true
         
-        emailLabel.trailingAnchor.constraint(equalTo: view.leadingAnchor, constant: -8).isActive = true
-        emailLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 56).isActive = true
+        emailLabel.trailingAnchor.constraint(equalTo: authButton.leadingAnchor, constant: -8).isActive = true
+        emailLabel.centerYAnchor.constraint(equalTo: emailTextField.centerYAnchor).isActive = true
         
         authButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         authButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        
+        loginButton.topAnchor.constraint(equalTo: authButton.bottomAnchor, constant: 16).isActive = true
+        loginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
     
     @objc private func didTapAuthButton() {
@@ -74,9 +81,7 @@ class LoginVC: UIViewController {
         
         let actionCodeSettings = ActionCodeSettings()
         actionCodeSettings.url = URL(string: "https://sample-9ca7b.firebaseapp.com/?email=\(email)")
-        // 로그인 작업은 항상 앱에서 완료하도록 하는 플래그값 (인증 과정 마지막에 사용자가 로그인하고 사용자의 인증 상태가 앱에서 관리되게끔 하기 위함)
         actionCodeSettings.handleCodeInApp = true
-        // Dynamic link를 위한 bundle id 등록
         actionCodeSettings.setIOSBundleID(Bundle.main.bundleIdentifier!)
         
         Auth.auth().sendSignInLink(toEmail: email,
@@ -97,8 +102,8 @@ class LoginVC: UIViewController {
                 print("email auth error \"\(error.localizedDescription)\"")
                 return
             }
-            let homeVC = HomeVC()
-            self?.navigationController?.pushViewController(homeVC, animated: true)
+//            let homeVC = HomeVC()
+//            self?.navigationController?.pushViewController(homeVC, animated: true)
         }
     }
 }

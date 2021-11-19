@@ -98,7 +98,6 @@
 		4A82BEA8274699BF0023E4F6 /* ExEmailLogin */ = {
 			isa = PBXGroup;
 			children = (
-				4A82BEAB274699BF0023E4F6 /* SceneDelegate.swift */,
 				4A82BEE92746C5FC0023E4F6 /* ExEmailLogin.entitlements */,
 				4A82BEE327469F440023E4F6 /* App */,
 				4A82BEE227469F410023E4F6 /* Model */,
@@ -135,6 +134,7 @@
 		4A82BEE327469F440023E4F6 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				4A82BEAB274699BF0023E4F6 /* SceneDelegate.swift */,
 				4A82BEA9274699BF0023E4F6 /* AppDelegate.swift */,
 				4A82BEDE27469ED20023E4F6 /* AppController.swift */,
 			);

@@ -12,7 +12,7 @@ import Firebase
 final class AppController {
     static let shared = AppController()
     private init() {
-        FirebaseApp.configure()
+        FirebaseApp.configure() // <- Fierbase 초기화
         registerAuthStateDidChangeEvent()
     }
     
@@ -28,17 +28,20 @@ final class AppController {
         window.backgroundColor = .systemBackground
         window.makeKeyAndVisible()
         
-        checkLoginIn()
+        // 로그인이 된 경우 AuthStateDidChange가 불리므로 2중으로 checkLogin이 불리지 않도록 설정
+        if Auth.auth().currentUser == nil {
+            checkLogin()
+        }
     }
     
     private func registerAuthStateDidChangeEvent() {
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(checkLoginIn),
+                                               selector: #selector(checkLogin),
                                                name: .AuthStateDidChange, // <- Firebase Auth 이벤트
                                                object: nil)
     }
         
-    @objc private func checkLoginIn() {
+    @objc private func checkLogin() {
         if let user = Auth.auth().currentUser { // <- Firebase Auth
             print("user = \(user)")
             setHome()
