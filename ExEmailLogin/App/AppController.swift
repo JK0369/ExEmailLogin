@@ -28,7 +28,10 @@ final class AppController {
         window.backgroundColor = .systemBackground
         window.makeKeyAndVisible()
         
-        checkLogin()
+        // 로그인이 완료된 경우에는 AuthStateDidChange 이벤트를 받아서 NotificationCenter에 의하여 자동 로그인
+        if Auth.auth().currentUser == nil {
+            routeToLogin()
+        }
     }
     
     private func registerAuthStateDidChangeEvent() {
