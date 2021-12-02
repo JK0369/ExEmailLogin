@@ -28,10 +28,7 @@ final class AppController {
         window.backgroundColor = .systemBackground
         window.makeKeyAndVisible()
         
-        // 로그인이 된 경우 AuthStateDidChange가 불리므로 2중으로 checkLogin이 불리지 않도록 설정
-        if Auth.auth().currentUser == nil {
-            checkLogin()
-        }
+        checkLogin()
     }
     
     private func registerAuthStateDidChangeEvent() {
